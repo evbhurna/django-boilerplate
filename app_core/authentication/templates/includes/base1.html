@@ -4,15 +4,68 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %}</title>
-    {% block add_links %}{% endblock %}
+    
     {% include "includes/links.html" %}
+    {% block add_links %}{% endblock %}
+    {% block add_style %}{% endblock %}
+    <style>
+        
+    header, main, footer {
+      padding-left: 250px;
+    }
+
+    @media only screen and (max-width : 992px) {
+      header, main, footer {
+        padding-left: 0;
+      }
+    }
+
+    .sidenav{
+        width: 250px;
+    }
+    </style>
 </head>
 <body>
     <main>
+        <div class="navbar-fixed">
+            <nav class="blue-grey darken-4">
+                <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+                {% block pagetitle %}{% endblock %}
+            </nav>
+        </div>
+        {% include 'includes/sidebar.html' %}
         {% block content %}
         {% endblock %}
     </main>
     {% block js_scripts %}
     {% endblock %}
+    {% load static %}
+    <!-- Compiled and minified JavaScript -->
+    <script src="{% static 'js/materialize.min.js' %}"></script>
+    <script>
+        $(document).ready(function () {
+            $('.sidenav').sidenav({
+                menuWidth: 100, // Default is 300
+                edge: 'left', // Choose the horizontal origin
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('.collapsible').collapsible({
+                accordion: false
+            });
+        });
+    </script>
+    <script>
+      $(document).ready(function(){
+        $('select').formSelect();
+    });
+    </script>
+    <script>
+      $(document).ready(function(){
+        $('.tabs').tabs();
+    });
+    </script>
 </body>
 </html>

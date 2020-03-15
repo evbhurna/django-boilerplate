@@ -10,7 +10,7 @@ from django.contrib.auth.models import User
 
 @login_required
 def home(request):
-    pass
+    return render(request, 'authentication/home.html')
 
 def loginUser(request):
     if request.method == 'POST':

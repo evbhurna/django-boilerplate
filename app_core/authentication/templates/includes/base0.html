@@ -9,11 +9,21 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/helpers.css' %}">
     {% block add_links %}{% endblock %}
+    {% block add_style %}{% endblock %}
 </head>
 <body>
+    <nav class="blue-grey darken-4">
+        <div class="nav-wrapper">
+          <a href="#" class="brand-logo">&nbsp;Application Name</a>
+        </div>
+      </nav>
     <main>
         {% block content %}
         {% endblock %}
+        <br/>
+        <br/>
+        <br/>
+        <p class="center">Copyright 2020 | Fourcore Corp</p>
     </main>
     {% block js_scripts %}
     {% endblock %}

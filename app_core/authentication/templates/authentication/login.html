@@ -1,7 +1,56 @@
 {% extends "includes/base0.html" %}
 
+{% block add_style %}
+{% load static %}
+<style>
+    #loginbox{
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 10px;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
-login page
-<h1>Yeah</h1>
-<h3>Yo</h3>
+
+        <br/>
+        <br/>
+        <div id="loginbox">
+            <h4>Welcome to</h4>
+            <h2>Application <b>Name</b></h2>
+            <br/>
+            <br/>
+            {% for message in messages %}
+                        <div class="{{ message.tags }}">
+                           <b>{{ message }}</b> 
+                        </div>
+                    {% endfor %}
+            <h5>Sign in with your username and password.</h5>
+            <br/>
+            <br/>
+            
+            <form method="POST">
+                {% csrf_token %}
+                <input type="text" class="" placeholder="Username" id="username" name="username" required>
+                <br/>
+                <input type="password" class="" placeholder="Password" id="password" name="password" required>
+                <p>
+                    <label>
+                      <input type="checkbox" />
+                      <span>Remember my username</span>
+                    </label>
+                  </p>
+                <br/>
+                <br/>
+                <a href="">Forgot Password?</a>
+                <br/>
+                <br/>
+                <button class="btn waves-effect blue-grey darken-3 waves-light" type="submit" name="action">Sign In
+                    <i class="material-icons right">send</i>
+                  </button>
+            </form>
+        </div>
+
+        
+
 {% endblock %}
