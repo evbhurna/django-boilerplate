@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %}</title>
@@ -8,8 +9,10 @@
     {% include "includes/links.html" %}
     {% block add_links %}{% endblock %}
     {% block add_style %}{% endblock %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/helpers.css' %}">
     <style>
-        
+    
     header, main, footer {
       padding-left: 250px;
     }
@@ -23,9 +26,19 @@
     .sidenav{
         width: 250px;
     }
+
+    #topbg{
+        background-color: #424242;
+        height: 200px;
+        width: 100%;
+        position: absolute;
+    }
     </style>
 </head>
 <body>
+    <div id="topbg">
+
+    </div>
     <main>
         <div class="navbar-fixed">
             <nav class="blue-grey darken-4">

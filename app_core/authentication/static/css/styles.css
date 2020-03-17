@@ -19,6 +19,10 @@ a{
     color: inherit;
 }
 
+nav{
+    height: 50px!important;
+}
+
 .warning{
     color: #f78b8b;
 }
