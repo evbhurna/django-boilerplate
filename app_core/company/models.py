@@ -32,7 +32,7 @@ class RateHistory(models.Model):
     def __str__(self):
         return str(self.rate)+" "+str(self.time_rate)
 
-class Profile(models.Model):
+class Employee(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
     rate = models.ForeignKey(Rate, on_delete=models.CASCADE)
