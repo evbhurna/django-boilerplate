@@ -4,10 +4,11 @@
     {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{% endblock %}</title>
+    <title>{% block title %}{% endblock %} - Payroll</title>
     
     {% include "includes/links.html" %}
-    {% block add_links %}{% endblock %}
+    {% block add_links %}
+    {% endblock %}
     {% block add_style %}{% endblock %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/helpers.css' %}">
@@ -28,7 +29,7 @@
     }
 
     #topbg{
-        background-color: #424242;
+        z-index: -1;
         height: 200px;
         width: 100%;
         position: absolute;
@@ -36,7 +37,7 @@
     </style>
 </head>
 <body>
-    <div id="topbg">
+    <div id="topbg" class="blue-grey darken-2">
 
     </div>
     <main>

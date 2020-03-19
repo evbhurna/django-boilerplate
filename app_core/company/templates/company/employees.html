@@ -1,0 +1,42 @@
+{% extends "includes/base1.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col s12 m12 l12">
+        <div class="card">
+            <div class="card-action grey darken-4 white-text">
+                <span>Employees</span>
+            </div>
+            <div class="card-content">
+                <table id="dtable">
+                    <thead>
+                        <tr>
+                            <th>Employee Number</th>
+                            <th>Name</th>
+                            <th>Rate</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if employees %}
+                        {% for item in employees %}
+                        <tr>
+                            <td>{{ item.employee_number }}</td>
+                            <td>{{ item }}</td>
+                            <td>{{ item.rate }}</td>
+                            <td>
+                                <a href="/students/{{ item.id }}/view/">
+                                    <span class="new badge red" data-badge-caption="VIEW"></span>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        {% else %}
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

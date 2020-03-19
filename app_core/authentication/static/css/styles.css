@@ -14,6 +14,11 @@ input, select, textarea{
     border-radius: 5px!important;  
 }
 
+label{
+    padding-left: 10px!important;
+    color: black!important;
+}
+
 a{
     text-decoration: none;
     color: inherit;
@@ -29,6 +34,10 @@ nav{
 
 .success{
     color: #7ebb7a;
+}
+
+.modal-content, .modal-header{
+    padding: 15px!important;
 }
 
 

@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.timezone import now
 
-# Create your models here.
 class Company(models.Model):
     code = models.CharField(max_length=16)
     name = models.CharField(max_length=128)
@@ -21,7 +20,7 @@ class Rate(models.Model):
     last_modified = models.DateTimeField(auto_now=True,)
 
     def __str__(self):
-        return str(self.company)+" "+str(self.name)
+        return str(self.name)
 
 class RateHistory(models.Model):
     rate =  models.ForeignKey(Rate, on_delete=models.CASCADE)
@@ -41,7 +40,7 @@ class Employee(models.Model):
     first_name = models.CharField(max_length=32)
     last_name = models.CharField(max_length=32)
     middle_name = models.CharField(max_length=32)
-    suffix = models.CharField(max_length=32)
+    suffix = models.CharField(max_length=32, blank=True)
     contact = models.CharField(max_length=32, blank=True)
     email = models.EmailField(max_length=32, blank=True)
     address = models.CharField(max_length=128, blank=True)
