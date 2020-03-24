@@ -8,6 +8,7 @@ class Deduction(models.Model):
     amount = models.DecimalField(decimal_places=2, max_digits=10)
     name = models.CharField(max_length=32)
     notes = models.TextField()
+    date = models.DateField(default=now)
     date_created = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True,)
 

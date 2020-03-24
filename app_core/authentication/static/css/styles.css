@@ -12,6 +12,7 @@ input, select, textarea{
     border: 1px solid gray!important;
     text-indent: 10px;
     border-radius: 5px!important;  
+    margin-bottom: 0!important;
 }
 
 label{
@@ -33,11 +34,16 @@ nav{
 }
 
 .success{
-    color: #7ebb7a;
+    background-color: #d5ffd2;
+    border-left: 5px solid green;
 }
 
 .modal-content, .modal-header{
-    padding: 15px!important;
+    padding: 8px!important;
+}
+
+.row{
+    margin-bottom: 0!important;
 }
 
 

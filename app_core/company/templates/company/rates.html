@@ -6,24 +6,24 @@
 <div class="row">
     <div class="col s12 m12 l12">
         {% for message in messages %}
-    <div class="">
-        <div class="card-panel success">
-            <span><i class="material-icons left">check_circle</i><b>{{ message }}</b>
-            </span>
+        <div class="">
+            <div class="card-panel success">
+                <span><i class="material-icons left">check_circle</i><b>{{ message }}</b>
+                </span>
+            </div>
         </div>
-    </div>
-    {% endfor %}
+        {% endfor %}
         <div class="card">
             <div class="card-action blue-grey darken-4 white-text">
                 <span>Employee Rates</span>
                 <span class="right"><a class="grey darken-4 modal-trigger" href="#modal1"><i
-                    class="material-icons left">add_box</i>Create New</a></span>
+                            class="material-icons left">add_box</i>Create New</a></span>
             </div>
             <div class="card-content">
-                <table id="dtable">
+                <table id="dtable" class="striped">
                     <thead>
                         <tr>
-                            <th>Rate</th>
+                            <th>Rate Name</th>
                             <th>Unit</th>
                             <th>Amount (Php)</th>
                             <th></th>
@@ -36,7 +36,7 @@
                         <tr>
                             <td>{{ item.rate.name }}</td>
                             <td>Daily</td>
-                            <th>{{ item.time_rate | intcomma }}</th>
+                            <td>{{ item.time_rate | intcomma }}</td>
                             <td>
                                 <a href="/rates/{{ item.id }}/view/">
                                     <span class="new badge red" data-badge-caption="VIEW"></span>
@@ -59,7 +59,7 @@
 <div id="modal1" class="modal" style="max-width: 600px; overflow-x: hidden;">
     <div class="modal-header blue-grey darken-2 white-text">
         <b>CREATE EMPLOYEE RATE</b>
-      </div>
+    </div>
     <div class="modal-content">
         <form action="" method="POST" id="ratesForm" autocomplete="off">
             {% csrf_token %}
@@ -70,7 +70,8 @@
                 <input id="name" name="name" type="text" class="validate" required>
                 <label for="name">Enter name of employee rate</label>
                 <div id="code-danger" class="warning red-text hide">
-                    <span ><i class="material-icons left">warning</i>Employee rate already registered. Employee rate name must be unique.</span>
+                    <span><i class="material-icons left">warning</i>Employee rate already registered. Employee rate name
+                        must be unique.</span>
                 </div>
             </div>
             <div class="input-field">
@@ -81,7 +82,8 @@
         </form>
     </div>
     <div class="modal-footer">
-        <button class=" waves-effect waves-green btn-flat btn grey darken-4 white-text" type="submit" form="ratesForm" id="formSubmit">
+        <button class=" waves-effect waves-green btn-flat btn grey darken-4 white-text" type="submit" form="ratesForm"
+            id="formSubmit">
             SUBMIT<i class="material-icons right">send</i>
         </button>
     </div>
@@ -89,6 +91,11 @@
 {% endblock %}
 
 {% block js_scripts %}
+<script>
+    $(document).ready(function () {
+        $('#dtable').DataTable();
+    });
+</script>
 <script>
     $(document).ready(function () {
         $('.modal').modal();

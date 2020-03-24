@@ -1,5 +1,8 @@
 {% extends "includes/base0.html" %}
 
+
+
+{% block title %}Login{% endblock %} 
 {% block add_style %}
 {% load static %}
 <style>
@@ -16,7 +19,7 @@
         <br/>
         <div id="loginbox">
             <h4>Welcome to</h4>
-            <h2>Application <b>Name</b></h2>
+            <h2>Cloud <b>Payroll</b></h2>
             <br/>
             <br/>
             {% for message in messages %}
@@ -31,7 +34,7 @@
             <form method="POST">
                 {% csrf_token %}
                 <input type="text" class="" placeholder="Username" id="username" name="username" required>
-                <br/>
+                <br/><br/>
                 <input type="password" class="" placeholder="Password" id="password" name="password" required>
                 <p>
                     <label>

@@ -42,9 +42,10 @@ def employees(request):
             request, '{} - Employee account successfully created.'.format(account.username))
         return redirect('/employees/')
     else:
+        rates = Rate.objects.filter(is_active='Active', company=user.company)
         employees = Employee.objects.filter(company=user.company)
         return render(request, 'company/employees.html', {
-            'user': user, 'employees': employees, 'today': today})
+            'user': user, 'employees': employees, 'today': today, 'rates':rates})
 
 
 @login_required
@@ -79,12 +80,12 @@ def rates(request):
         rate = Rate.objects.create(
             company=user.company, name=request.POST['name'])
         RateHistory.objects.create(
-            rate=rate, time_rate=request.POST['time_rate'])
+            rate=rate, status=1, time_rate=request.POST['time_rate'])
         messages.success(
             request, '{} - Employee rate successfully created.'.format(rate.name))
         return redirect('/rates/')
     else:
-        rates = Rate.objects.filter(company=user.company)
+        rates = RateHistory.objects.filter(rate__company=user.company, status=1)
         return render(request, 'company/rates.html', {
             'user': user, 'rates': rates, 'today': today})
 
@@ -101,6 +102,8 @@ def ratesView(request, id):
         if Decimal(request.POST['time_rate'])==Decimal(latest_rates.time_rate):
             pass
         else:
+            latest_rates.status = 0
+            latest_rates.save()
             RateHistory.objects.create(
                 rate=rate, time_rate=request.POST['time_rate'])
 

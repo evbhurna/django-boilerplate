@@ -25,6 +25,8 @@ class Rate(models.Model):
 class RateHistory(models.Model):
     rate =  models.ForeignKey(Rate, on_delete=models.CASCADE)
     time_rate = models.DecimalField(decimal_places=2, max_digits=10)
+    status = models.IntegerField(default=0)
+    taxable = models.IntegerField(default=0) #0-non tax, 1-taxable
     date_created = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True,)
 
@@ -35,7 +37,7 @@ class Employee(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
     rate = models.ForeignKey(Rate, on_delete=models.CASCADE)
-    employee_number = models.IntegerField(default=0)
+    employee_number = models.CharField(max_length=32)
     gender = models.CharField(max_length=16)
     first_name = models.CharField(max_length=32)
     last_name = models.CharField(max_length=32)
