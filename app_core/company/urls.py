@@ -13,4 +13,6 @@ urlpatterns = [
     path('ajax/create_rate/', ajax.createRate),
     path('ajax/update_employee/', ajax.updateEmployee),
     path('ajax/update_rate/', ajax.updateRate),
+
+    path('my_profile/', views.myProfile)
 ]

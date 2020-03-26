@@ -47,7 +47,6 @@ def employees(request):
         return render(request, 'company/employees.html', {
             'user': user, 'employees': employees, 'today': today, 'rates':rates})
 
-
 @login_required
 def employeesView(request, id):
     user = Employee.objects.get(user=request.user)
@@ -67,11 +66,12 @@ def employeesView(request, id):
         employee.save()
 
         messages.success(
-            request, '{} - Employee account successfully updated.'.format(employee.account.username))
+            request, '{} - Employee information successfully updated.'.format(employee.user.username))
         return redirect('/employees/{}/view/'.format(id))
     else:
+        rates = Rate.objects.filter(company=user.company, is_active='Active')
         return render(request, 'company/employeesView.html', {
-            'user': user, 'employee': employee, 'today': today})
+            'user': user, 'employee': employee, 'rates':rates, 'today': today})
 
 @login_required
 def rates(request):
@@ -125,3 +125,12 @@ def generate_username(first_name, middle_name, last_name):
     l_names = last_name.lower().replace(' ', '')
     password = f_names + m_names + l_names
     return password
+
+@login_required
+def myProfile(request):
+    user = Employee.objects.get(user=request.user)
+    if request.method == 'POST':
+        pass
+    else:
+        return render(request, 'company/myProfile.html', {
+            'user': user, 'today': today})

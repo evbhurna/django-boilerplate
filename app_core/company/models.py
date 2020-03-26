@@ -33,6 +33,13 @@ class RateHistory(models.Model):
     def __str__(self):
         return str(self.rate)+" "+str(self.time_rate)
 
+    @property
+    def tax(self):
+        if self.taxable == 0:
+            return "Non Taxed"
+        else:
+            return "Taxed"
+
 class Employee(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
@@ -50,5 +57,5 @@ class Employee(models.Model):
     last_modified = models.DateTimeField(auto_now=True,)
 
     def __str__(self):
-        return str(self.last_name)+" "+str(self.suffix)+", "+str(self.first_name)+" "+str(self.middle_name)
+        return str(self.last_name)+" "+str(self.suffix)+", "+str(self.first_name)+" "+str(self.middle_name)[:1]+"."
 

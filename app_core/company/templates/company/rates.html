@@ -14,9 +14,9 @@
         </div>
         {% endfor %}
         <div class="card">
-            <div class="card-action blue-grey darken-4 white-text">
+            <div class="card-action grey darken-3 white-text">
                 <span>Employee Rates</span>
-                <span class="right"><a class="grey darken-4 modal-trigger" href="#modal1"><i
+                <span class="right"><a class="grey darken-3 modal-trigger" href="#modal1"><i
                             class="material-icons left">add_box</i>Create New</a></span>
             </div>
             <div class="card-content">
@@ -24,8 +24,9 @@
                     <thead>
                         <tr>
                             <th>Rate Name</th>
-                            <th>Unit</th>
-                            <th>Amount (Php)</th>
+                            <th>Tax</th>
+                            <th>Daily Rate (Php)</th>
+                            <th>Created/Last Modified</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -35,11 +36,12 @@
                         {% for item in rates %}
                         <tr>
                             <td>{{ item.rate.name }}</td>
-                            <td>Daily</td>
+                            <td>{{ item.tax }}</td>
                             <td>{{ item.time_rate | intcomma }}</td>
+                            <td>{{ item.last_modified }}</td>
                             <td>
                                 <a href="/rates/{{ item.id }}/view/">
-                                    <span class="new badge red" data-badge-caption="VIEW"></span>
+                                    <span class="new badge blue" data-badge-caption="VIEW"></span>
                                 </a>
                             </td>
                         </tr>
@@ -53,11 +55,9 @@
     </div>
 </div>
 
-
-
 <!-- Modal Structure -->
 <div id="modal1" class="modal" style="max-width: 600px; overflow-x: hidden;">
-    <div class="modal-header blue-grey darken-2 white-text">
+    <div class="modal-header grey darken-3 white-text">
         <b>CREATE EMPLOYEE RATE</b>
     </div>
     <div class="modal-content">
@@ -65,24 +65,34 @@
             {% csrf_token %}
             <input type="text" id="user_name" value="{{user}}" class="hide">
             <input type="text" id="today" value="{{today|date}}" class="hide">
-            <div class="input-field">
-                <i class="material-icons prefix">notes</i>
-                <input id="name" name="name" type="text" class="validate" required>
-                <label for="name">Enter name of employee rate</label>
-                <div id="code-danger" class="warning red-text hide">
-                    <span><i class="material-icons left">warning</i>Employee rate already registered. Employee rate name
-                        must be unique.</span>
+            <div class="row">
+                <div class="col s12 input-field">
+                    <i class="material-icons prefix">notes</i>
+                    <input id="name" name="name" type="text" placeholder="Enter name of employee rate" class="validate" required>
+                    <label for="name">Rate</label>
+                    <div id="code-danger" class="warning red-text hide">
+                        <span><i class="material-icons left">warning</i>Employee rate already registered. Employee rate name
+                            must be unique.</span>
+                    </div>
                 </div>
-            </div>
-            <div class="input-field">
-                <i class="material-icons prefix">payment</i>
-                <input id="time_rate" name="time_rate" type="number" min="0" step="0.01" class="validate" required>
-                <label for="time_rate">Enter employee rate (Php)</label>
+                <div class="col s12 input-field">
+                    <i class="material-icons prefix">payment</i>
+                    <input id="time_rate" name="time_rate" placeholder="Enter employee rate (Php) per day" type="number" min="0" step="0.01" class="validate" required>
+                    <label for="time_rate">Amount (Rate)</label>
+                </div>
+                <div class="col s12 input-field">
+                    <i class="material-icons prefix">poll</i>
+                    <select id="tax" name="tax" class="validate" required>
+                        <option value="0">Non Taxable</option>
+                        <option value="1">Taxable</option>
+                    </select>
+                    <label for="time_rate">Tax Option</label>
+                </div>
             </div>
         </form>
     </div>
     <div class="modal-footer">
-        <button class=" waves-effect waves-green btn-flat btn grey darken-4 white-text" type="submit" form="ratesForm"
+        <button class=" waves-effect waves-green btn-flat btn grey darken-3 white-text" type="submit" form="ratesForm"
             id="formSubmit">
             SUBMIT<i class="material-icons right">send</i>
         </button>
@@ -93,7 +103,9 @@
 {% block js_scripts %}
 <script>
     $(document).ready(function () {
-        $('#dtable').DataTable();
+        $('#dtable').DataTable({
+            "order":[[ 3, "desc" ]]
+        });
     });
 </script>
 <script>
