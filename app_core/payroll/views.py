@@ -12,7 +12,17 @@ today = now
 def generatePayroll(request):
     user = Employee.objects.get(user=request.user)
     if request.method == 'POST':
-        pass
+        date_range = request.POST['litepicker']
+        start_date = date_range[:10]
+        end_date = date_range[13:]
+
+        from . import helpers
+
+        payroll = helpers.getNetPayroll(request, start_date, end_date)
+
+        return render(request, 'payroll/generatePayroll.html', {
+            'user':user, 'today':today, 'payroll':payroll
+        })
     else:
         return render(request, 'payroll/generatePayroll.html', {
             'user':user, 'today':today

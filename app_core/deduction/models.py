@@ -7,6 +7,7 @@ class Deduction(models.Model):
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
     amount = models.DecimalField(decimal_places=2, max_digits=10)
     name = models.CharField(max_length=32)
+    auto = models.CharField(max_length=32, default='NAUTO')
     notes = models.TextField()
     date = models.DateField(default=now)
     date_created = models.DateTimeField(auto_now_add=True)

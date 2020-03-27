@@ -1,0 +1,133 @@
+{% extends "includes/base1.html" %}
+
+{% block title %}Rate : {{latest.rate.name}}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col s12 m12 l12">
+        {% for message in messages %}
+        <div class="">
+            <div class="card-panel success">
+                <span><i class="material-icons left">check_circle</i>{{ message }}
+                </span>
+            </div>
+        </div>
+        {% endfor %}
+        <div class="card">
+            <div class="card-action grey darken-3 white-text">
+                <span>Rate: <i>{{latest.rate.name}}</i></span>
+                <span class="right"><a class="grey darken-3 modal-trigger" href="/rates/"><i
+                            class="material-icons left">arrow_back</i>Back</a></span>
+            </div>
+            <div class="card-content">
+                <form action="" method="POST" id="ratesForm" autocomplete="off">
+                    {% csrf_token %}
+                    <input type="text" id="user_name" value="{{user}}" class="hide">
+                    <input type="text" id="today" value="{{today|date}}" class="hide">
+                    <input type="text" id="id" value="{{latest.rate.id}}" class="hide">
+                    <b>Rate Information</b>
+                    <br /><br />
+                    <div class="row" style="max-width: 700px;">
+                        <div class="col s12 input-field">
+                            <input id="name" name="name" type="text" value="{{latest.rate.name}}" class="validate"
+                                placeholder="Enter name of employee rate" required>
+                            <label for="name">Rate</label>
+                        </div>
+                        <div id="code-danger" class="col s12 warning red-text hide">
+                            <span><i class="material-icons left">warning</i>Employee rate already registered. Employee
+                                rate name
+                                must be unique.</span>
+                            <br /><br />
+                        </div>
+                        <div class="col s6 input-field">
+                            <input id="time_rate" name="time_rate" type="number" step="0.01" min="0"
+                                value="{{latest.time_rate}}" placeholder="Enter employee rate (Php) per day"
+                                class="validate" required>
+                            <label for="time_rate">Amount (Rate)</label>
+                        </div>
+                        <div class="col s6 input-field">
+                            <select id="tax" name="tax" type="text" class="validate" required>
+                                {% if employee.gender == 'Taxable' %}
+                                <option value="1" selected>Taxable</option>
+                                <option value="0">Non Taxable</option>
+                                {% else %}
+                                <option value="1">Taxable</option>
+                                <option value="0" selected>Non Taxable</option>
+                                {% endif %}
+                            </select>
+                            <label for="tax">Tax Option</label>
+                        </div>
+                    </div>
+                    <button class="btn waves-effect waves-light grey darken-3" id="formSubmit" type="submit"
+                        name="action">Submit
+                        <i class="material-icons right">send</i>
+                    </button>
+                    <br /><br />
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-action grey darken-3 white-text">
+                <span>Rate History</span>
+            </div>
+            <div class="card-content">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Rate</th>
+                            <th>Amount (Rate)</th>
+                            <th>Tax</th>
+                            <th>Date Modified</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% load humanize %}
+                        {% if history %}
+                        {% for item in history %}
+                        <tr>
+                            <td>{{item.rate.name}}</td>
+                            <td>{{item.time_rate | intcomma }}</td>
+                            <td>{{ item.tax }}</td>
+                            <td>{{ item.last_modified }}</td>
+                        </tr>
+                        {% endfor %}
+                        {% else %}
+
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js_scripts %}
+<script>
+    document.getElementById('name').addEventListener('input', function () {
+        var name = document.getElementById('name').value
+        var id = document.getElementById('id').value
+        name = name.trim();
+
+        $.ajax({
+            type: 'POST',
+            url: '/ajax/update_rate/',
+            data: {
+                name: name,
+                id: id,
+                csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val()
+            },
+            success: function (data) {
+                if (data.is_taken) {
+                    document.getElementById("formSubmit").setAttribute("disabled", "true");
+                    document.getElementById('code-danger').classList.remove('hide');
+                }
+                else {
+                    document.getElementById("formSubmit").removeAttribute("disabled");
+                    document.getElementById('code-danger').classList.add('hide');
+                }
+            }
+        });
+    })
+</script>
+{% endblock %}

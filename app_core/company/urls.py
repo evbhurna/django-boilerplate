@@ -14,5 +14,7 @@ urlpatterns = [
     path('ajax/update_employee/', ajax.updateEmployee),
     path('ajax/update_rate/', ajax.updateRate),
 
-    path('my_profile/', views.myProfile)
+    path('my_profile/', views.myProfile),
+    path('change_password/', views.changePassword),
+    path('reset_password/<slug:id>/reset/', views.resetPassword),
 ]

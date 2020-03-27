@@ -1,0 +1,63 @@
+{% extends "includes/base1.html" %}
+
+{% block title %}My Taxes{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col s12 m12 l12">
+        {% for message in messages %}
+        <div class="">
+            <div class="card-panel success">
+                <span><i class="material-icons left">check_circle</i> Success: {{ message }}
+                </span>
+            </div>
+        </div>
+        {% endfor %}
+        <div class="card">
+            <div class="card-action grey darken-3 white-text">
+                <span>My Taxes</span>
+            </div>
+            <div class="card-content">
+                <table id="dtable" class="striped">
+                    <thead>
+                        <tr>
+                            <th>Deduction</th>
+                            <th>Amount (Php)</th>
+                            <th>For (date)</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% load humanize %}
+                        {% if deductions %}
+                        {% for item in deductions %}
+                        <tr>
+                            <td>{{ item.name }}</td>
+                            <td>{{ item.amount | intcomma }}</td>
+                            <td>{{ item.date | date }}</td>
+                            <td>
+                                <a href="/deductions/{{ item.id }}/view/">
+                                    <span class="new badge blue" data-badge-caption="VIEW"></span>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        {% else %}
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block js_scripts %}
+<script>
+    $(document).ready(function () {
+        $('#dtable').DataTable();
+    });
+</script>
+{% endblock %}

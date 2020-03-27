@@ -1,0 +1,116 @@
+{% extends "includes/base1.html" %}
+
+{% block title %}My Profile{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col s12 m12 l12">
+        {% for message in messages %}
+        <div class="">
+            <div class="card-panel success">
+                <span><i class="material-icons left">check_circle</i> Success: {{ message }}
+                </span>
+            </div>
+        </div>
+        {% endfor %}
+        <div class="card">
+            <div class="card-action grey darken-3 white-text">
+                <span>My Profile: <i>{{user}}</i></span>
+            </div>
+            <div class="card-content">
+                <form method="POST" id="profileForm" autocomplete="off">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col s12 m8">
+                            <div class="row">
+                                <div class="col s12">
+                                    <b>Employee ID</b>
+                                </div>
+                                <div class="col s6 m6 input-field">
+                                    <label for="">Employee Number</label>
+                                    <input type="text" value="{{user.employee_number}}" required
+                                        placeholder="Enter Employee Number" readonly disabled>
+                                </div>
+                                <div class="col s6 m6 input-field">
+                                    <label for="employee_number">Salary Rate</label>
+                                    <input type="text" value="{{user.rate}}" required
+                                        placeholder="Enter Employee Number" readonly disabled>
+                                </div>
+                                <div class="col s12">
+                                    <b>Name</b>
+                                </div>
+                                <div class="col s6 m3 input-field">
+                                    <label for="first_name">First Name</label>
+                                    <input type="text" name="first_name" id="first_name" value="{{user.first_name}}"
+                                        required placeholder="Enter First Name">
+                                </div>
+                                <div class="col s6 m3 input-field">
+                                    <label for="middle_name">Middle Name</label>
+                                    <input type="text" name="middle_name" id="middle_name" value="{{user.middle_name}}"
+                                        required placeholder="Enter Middle Name">
+                                </div>
+                                <div class="col s6 m3 input-field">
+                                    <label for="last_name">Last Name</label>
+                                    <input type="text" name="last_name" id="last_name" value="{{user.last_name}}"
+                                        required placeholder="Enter Last Name">
+                                </div>
+                                <div class="col s6 m3 input-field">
+                                    <label for="suffix">Suffix</label>
+                                    <input type="text" name="suffix" id="suffix" value="{{user.suffix}}"
+                                        placeholder="Enter Suffix">
+                                </div>
+                                <div class="col s12">
+                                    <b>Basic Information</b>
+                                </div>
+                                <div class="col s6 m4 input-field">
+                                    <select name="gender" id="gender" value="{{user.gender}}">
+                                        {% if user.gender == 'Male' %}
+                                        <option value="Male" selected>Male</option>
+                                        <option value="Female">Female</option>
+                                        {% else %}
+                                        <option value="Female" selected>Female</option>
+                                        <option value="Male">Male</option>
+                                        {% endif %}
+                                    </select>
+                                    <label for="gender">Gender</label>
+                                </div>
+                                <div class="col s6 m4 input-field">
+                                    <label for="contact">Contact</label>
+                                    <input type="text" name="contact" id="contact" value="{{user.contact}}"
+                                        placeholder="Enter Contact Details">
+                                </div>
+                                <div class="col s6 m4 input-field">
+                                    <label for="email">Email</label>
+                                    <input type="email" name="email" id="email" value="{{user.email}}"
+                                        placeholder="Enter Email Address">
+                                </div>
+                                <div class="col s12 input-field">
+                                    <label for="address">Address</label>
+                                    <textarea class="materialize-textarea" name="address" id="address"
+                                        placeholder="Enter Home Address">{{user.address}}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn waves-effect waves-light grey darken-3" type="submit" name="action">Submit
+                        <i class="material-icons right">send</i>
+                    </button>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-action grey darken-3 white-text">
+                <span>Actions</span>
+            </div>
+            <div class="card-content">
+                <a class="waves-effect waves-light btn grey darken-3" href="/change_password/"><i
+                        class="material-icons right">lock</i>Change Password</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js_scripts %}
+
+{% endblock %}

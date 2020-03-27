@@ -98,21 +98,22 @@ def ratesView(request, id):
         rate.name = request.POST['name']
         rate.save()
 
-        latest_rates = RateHistory.objects.filter(rate=rate).order_by('date_created')[0]
+        latest_rates = RateHistory.objects.filter(rate=rate).order_by('date_created').reverse()[0]
         if Decimal(request.POST['time_rate'])==Decimal(latest_rates.time_rate):
             pass
         else:
             latest_rates.status = 0
             latest_rates.save()
             RateHistory.objects.create(
-                rate=rate, time_rate=request.POST['time_rate'])
+                rate=rate, time_rate=request.POST['time_rate'], status=1)
 
         messages.success(
             request, '{} - Employee rate successfully updated.'.format(rate.name))
         return redirect('/rates/{}/view/'.format(id))
     else:
+        latest = history.reverse()[0]
         return render(request, 'company/ratesView.html', {
-            'user': user, 'rates': rates, 'today': today})
+            'user': user, 'latest': latest, 'today': today, 'history':history.reverse()})
 
 
 def generate_username(first_name, middle_name, last_name):
@@ -130,7 +131,54 @@ def generate_username(first_name, middle_name, last_name):
 def myProfile(request):
     user = Employee.objects.get(user=request.user)
     if request.method == 'POST':
-        pass
+        user.gender = request.POST['gender']
+        user.first_name = request.POST['first_name']
+        user.last_name = request.POST['last_name']
+        user.middle_name = request.POST['middle_name']
+        user.suffix=request.POST['suffix']
+        user.contact=request.POST['contact']
+        user.email=request.POST['email']
+        user.address=request.POST['address']
+        user.save()
+
+        messages.success(
+            request, '{} - Employee information successfully updated.'.format(user.user.username))
+        return redirect('/my_profile/')
     else:
         return render(request, 'company/myProfile.html', {
             'user': user, 'today': today})
+
+@login_required
+def changePassword(request):
+    from django.contrib.auth.forms import PasswordChangeForm
+    from django.contrib.auth import update_session_auth_hash
+    user = Employee.objects.get(user=request.user)
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user.last_modified = now()
+            user.save()
+            account = form.save()
+            update_session_auth_hash(request, account)  # Important!
+            messages.success(request, 'Your password has been changed.')
+            return redirect('/change_password/')
+        else:
+            pass
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'company/changePassword.html', {
+        'form': form,
+        'user': user
+    })
+
+@login_required
+def resetPassword(request, id):
+    employee = Employee.objects.get(id=id)
+    user = User.objects.get(id=employee.user.id)
+    user.password = employee.employee_number
+    user.save()
+
+    messages.success(request, 'Password reset successful.')
+    return redirect('/employees/{}/view/'.format())
+
+ 

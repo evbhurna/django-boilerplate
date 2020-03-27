@@ -25,36 +25,43 @@
                     <input type="text" id="user_name" value="{{user}}" class="hide">
                     <input type="text" id="today" value="{{today|date}}" class="hide">
                     <b>Basic Information</b>
-                    <br/><br/>
+                    <br /><br />
                     <div class="row" style="max-width: 700px;">
-                        
+
                         <div class="col s6 input-field">
-                            <input id="first_name" name="first_name" type="text" value="{{employee.first_name}}" class="validate" required>
+                            <input id="first_name" name="first_name" type="text" value="{{employee.first_name}}"
+                                class="validate" required>
                             <label for="first_name">First Name</label>
                         </div>
                         <div class="col s6 input-field">
-                            <input id="last_name" name="last_name" type="text" value="{{employee.last_name}}" placeholder="Enter Last Name" class="validate" required>
+                            <input id="last_name" name="last_name" type="text" value="{{employee.last_name}}"
+                                placeholder="Enter Last Name" class="validate" required>
                             <label for="last_name">Last Name</label>
                         </div>
                         <div class="col s6 input-field">
-                            <input id="middle_name" name="middle_name" type="text" value="{{employee.middle_name}}" placeholder="Enter Middle Name" class="validate" required>
+                            <input id="middle_name" name="middle_name" type="text" value="{{employee.middle_name}}"
+                                placeholder="Enter Middle Name" class="validate" required>
                             <label for="middle_name">Middle Name</label>
                         </div>
                         <div class="col s6 input-field">
-                            <input id="suffix" name="suffix" type="text" value="{{employee.suffix}}" placeholder="Enter Suffix (i.e. Jr, II, III, etc.)" class="validate">
+                            <input id="suffix" name="suffix" type="text" value="{{employee.suffix}}"
+                                placeholder="Enter Suffix (i.e. Jr, II, III, etc.)" class="validate">
                             <label for="suffix">Suffix</label>
                         </div>
                         <div class="col s12 input-field">
-                            <input id="employee_number" name="employee_number" value="{{employee.employee_number}}" type="number" class="validate" placeholder="Enter employee number" required>
+                            <input id="employee_number" name="employee_number" value="{{employee.employee_number}}"
+                                type="number" class="validate" placeholder="Enter employee number" required>
                             <label for="employee_number">Employee Number</label>
                         </div>
                         <div class="col s6 input-field">
-                            <input id="contact" name="contact" type="text" class="validate" value="{{employee.contact}}" placeholder="Enter contact details" required>
+                            <input id="contact" name="contact" type="text" class="validate" value="{{employee.contact}}"
+                                placeholder="Enter contact details" required>
                             <label for="contact">Contact</label>
                         </div>
-        
+
                         <div class="col s6 input-field">
-                            <input id="email" name="email" type="text" class="validate" value="{{employee.email}}" placeholder="Enter email address" required>
+                            <input id="email" name="email" type="text" class="validate" value="{{employee.email}}"
+                                placeholder="Enter email address" required>
                             <label for="email">Email</label>
                         </div>
                         <div class="col s6 input-field">
@@ -66,7 +73,7 @@
                             </select>
                             <label for="rate">Select employee rate</label>
                         </div>
-        
+
                         <div class="col s6 input-field">
                             <select id="gender" name="gender" type="text" class="validate" required>
                                 {% if employee.gender == 'Male' %}
@@ -80,20 +87,22 @@
                             <label for="gender">Select gender</label>
                         </div>
                         <div class="col s12 input-field">
-                            <textarea id="address" name="address" placeholder="Enter your home address" class="validate materialize-textarea" required>{{employee.address}}</textarea>
+                            <textarea id="address" name="address" placeholder="Enter your home address"
+                                class="validate materialize-textarea" required>{{employee.address}}</textarea>
                             <label for="address">Home Address</label>
                         </div>
                     </div>
-        
+
                     <button class="btn waves-effect waves-light grey darken-3" type="submit" name="action">Submit
                         <i class="material-icons right">send</i>
-                      </button>
-                      <a class="btn waves-effect waves-light grey darken-3 modal-trigger" href="#modal1" >Reset Password
+                    </button>
+                    <a class="btn waves-effect waves-light grey darken-3 modal-trigger" href="#modal1">Reset Password
                         <i class="material-icons right">send</i>
-                      </a>
-                    <br/><br/>
+                    </a>
+                    <br /><br />
                     <div id="code-danger" class="warning red-text hide">
-                        <span><i class="material-icons left">warning</i>Employee rate already registered. Employee rate name
+                        <span><i class="material-icons left">warning</i>Employee rate already registered. Employee rate
+                            name
                             must be unique.</span>
                     </div>
                 </form>
@@ -109,13 +118,17 @@
         <b>RESET PASSWORD</b>
     </div>
     <div class="modal-content">
-        
+        <h5>Reset password to default.</h5>
+        <br/>
+        <p>Default password is the employee number.</p>
     </div>
     <div class="modal-footer">
-        <button class=" waves-effect waves-green btn-flat btn grey darken-3 white-text" type="submit" form="ratesForm"
+        <a href="/reset_password/{{employee.id}}/reset/">
+        <button class=" waves-effect waves-green btn-flat btn grey darken-3 white-text" type="submit" 
             id="formSubmit">
             PROCEED<i class="material-icons right">send</i>
         </button>
+    </a> 
     </div>
 </div>
 {% endblock %}

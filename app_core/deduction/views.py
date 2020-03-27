@@ -98,5 +98,5 @@ def myDeductions(request):
     else:
         deductions = Deduction.objects.filter(employee=user)
         return render(request, 'deduction/myDeductions.html', {
-            'user':user, 'today':today
+            'user':user, 'today':today, 'deductions':deductions
         })
