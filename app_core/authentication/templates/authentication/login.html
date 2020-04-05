@@ -33,15 +33,20 @@
             
             <form method="POST" autocomplete="off">
                 {% csrf_token %}
-                <input type="text" class="" placeholder="Username" id="username" name="username" required>
-                <br/><br/>
-                <input type="password" class="" placeholder="Password" id="password" name="password" required>
-                <p>
+                <div>
+                  <input type="text" class="" placeholder="Username" id="username" name="username" required>
+                  <br/><br/>
+                  <input type="password" class="" placeholder="Password" id="password" name="password" required>
+                </div>
+                <br/>
+                <div>
+                  <p>
                     <label>
                       <input type="checkbox" />
                       <span>Remember my username</span>
                     </label>
                   </p>
+                </div>
                 <br/>
                 <br/>
                 <a href="">Forgot Password?</a>

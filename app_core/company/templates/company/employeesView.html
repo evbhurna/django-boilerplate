@@ -26,73 +26,129 @@
                     <input type="text" id="today" value="{{today|date}}" class="hide">
                     <b>Basic Information</b>
                     <br /><br />
-                    <div class="row" style="max-width: 700px;">
+                    <div class="row">
+                        <div class="col s12 l6">
+                            <div class="row">
+                                <div class="col s6 input-field">
+                                    <input id="first_name" name="first_name" type="text" value="{{employee.first_name}}"
+                                        class="validate" required>
+                                    <label for="first_name">First Name</label>
+                                </div>
+                                <div class="col s6 input-field">
+                                    <input id="last_name" name="last_name" type="text" value="{{employee.last_name}}"
+                                        placeholder="Enter Last Name" class="validate" required>
+                                    <label for="last_name">Last Name</label>
+                                </div>
+                                <div class="col s6 input-field">
+                                    <input id="middle_name" name="middle_name" type="text"
+                                        value="{{employee.middle_name}}" placeholder="Enter Middle Name"
+                                        class="validate" required>
+                                    <label for="middle_name">Middle Name</label>
+                                </div>
+                                <div class="col s6 input-field">
+                                    <input id="suffix" name="suffix" type="text" value="{{employee.suffix}}"
+                                        placeholder="Enter Suffix (i.e. Jr, II, III, etc.)" class="validate">
+                                    <label for="suffix">Suffix</label>
+                                </div>
+                                <div class="col s12 input-field">
+                                    <input id="employee_number" name="employee_number"
+                                        value="{{employee.employee_number}}" type="number" class="validate"
+                                        placeholder="Enter employee number" required>
+                                    <label for="employee_number">Employee Number</label>
+                                </div>
+                                <div class="col s6 input-field">
+                                    <input id="contact" name="contact" type="text" class="validate"
+                                        value="{{employee.contact}}" placeholder="Enter contact details" required>
+                                    <label for="contact">Contact</label>
+                                </div>
 
-                        <div class="col s6 input-field">
-                            <input id="first_name" name="first_name" type="text" value="{{employee.first_name}}"
-                                class="validate" required>
-                            <label for="first_name">First Name</label>
-                        </div>
-                        <div class="col s6 input-field">
-                            <input id="last_name" name="last_name" type="text" value="{{employee.last_name}}"
-                                placeholder="Enter Last Name" class="validate" required>
-                            <label for="last_name">Last Name</label>
-                        </div>
-                        <div class="col s6 input-field">
-                            <input id="middle_name" name="middle_name" type="text" value="{{employee.middle_name}}"
-                                placeholder="Enter Middle Name" class="validate" required>
-                            <label for="middle_name">Middle Name</label>
-                        </div>
-                        <div class="col s6 input-field">
-                            <input id="suffix" name="suffix" type="text" value="{{employee.suffix}}"
-                                placeholder="Enter Suffix (i.e. Jr, II, III, etc.)" class="validate">
-                            <label for="suffix">Suffix</label>
-                        </div>
-                        <div class="col s12 input-field">
-                            <input id="employee_number" name="employee_number" value="{{employee.employee_number}}"
-                                type="number" class="validate" placeholder="Enter employee number" required>
-                            <label for="employee_number">Employee Number</label>
-                        </div>
-                        <div class="col s6 input-field">
-                            <input id="contact" name="contact" type="text" class="validate" value="{{employee.contact}}"
-                                placeholder="Enter contact details" required>
-                            <label for="contact">Contact</label>
-                        </div>
+                                <div class="col s6 input-field">
+                                    <input id="email" name="email" type="text" class="validate"
+                                        value="{{employee.email}}" placeholder="Enter email address" required>
+                                    <label for="email">Email</label>
+                                </div>
+                                <div class="col s6 input-field">
+                                    <select id="rate" name="rate" type="text" class="validate" required>
+                                        <option value="{{employee.rate.id}}">{{employee.rate}}</option>
+                                        {% for item in rates %}
+                                        <option value="{{item.id}}">{{item}}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <label for="rate">Select employee rate</label>
+                                </div>
 
-                        <div class="col s6 input-field">
-                            <input id="email" name="email" type="text" class="validate" value="{{employee.email}}"
-                                placeholder="Enter email address" required>
-                            <label for="email">Email</label>
-                        </div>
-                        <div class="col s6 input-field">
-                            <select id="rate" name="rate" type="text" class="validate" required>
-                                <option value="{{employee.rate.id}}">{{employee.rate}}</option>
-                                {% for item in rates %}
-                                <option value="{{item.id}}">{{item}}</option>
-                                {% endfor %}
-                            </select>
-                            <label for="rate">Select employee rate</label>
-                        </div>
-
-                        <div class="col s6 input-field">
-                            <select id="gender" name="gender" type="text" class="validate" required>
-                                {% if employee.gender == 'Male' %}
-                                <option value="{{employee.gender}}" selected>{{employee.gender}}</option>
-                                <option value="Female">Female</option>
-                                {% else %}
-                                <option value="Male">Male</option>
-                                <option value="{{employee.gender}}" selected>{{employee.gender}}</option>
-                                {% endif %}
-                            </select>
-                            <label for="gender">Select gender</label>
-                        </div>
-                        <div class="col s12 input-field">
-                            <textarea id="address" name="address" placeholder="Enter your home address"
-                                class="validate materialize-textarea" required>{{employee.address}}</textarea>
-                            <label for="address">Home Address</label>
+                                <div class="col s6 input-field">
+                                    <select id="gender" name="gender" type="text" class="validate" required>
+                                        {% if employee.gender == 'Male' %}
+                                        <option value="{{employee.gender}}" selected>{{employee.gender}}</option>
+                                        <option value="Female">Female</option>
+                                        {% else %}
+                                        <option value="Male">Male</option>
+                                        <option value="{{employee.gender}}" selected>{{employee.gender}}</option>
+                                        {% endif %}
+                                    </select>
+                                    <label for="gender">Select gender</label>
+                                </div>
+                                <div class="col s12 input-field">
+                                    <textarea id="address" name="address" placeholder="Enter your home address"
+                                        class="validate materialize-textarea" required>{{employee.address}}</textarea>
+                                    <label for="address">Home Address</label>
+                                </div>
+                                <div class="col s12">
+                                    <b>Automatic Deductions</b>
+                                </div>
+                                <div class="col s6 input-field">
+                                    <p>
+                                        <label>
+                                            {% if employee.auto_sss == 1 %}
+                                            <input type="checkbox" class="filled-in" checked="checked" name="auto_sss" />
+                                            {% else %}
+                                            <input type="checkbox" class="filled-in" name="auto_sss" />
+                                            {% endif %}
+                                            <span>SSS Contribution</span>
+                                        </label>
+                                    </p>
+                                </div>
+                                <div class="col s6 input-field">
+                                    <p>
+                                        <label>
+                                            {% if employee.auto_philhealth == 1 %}
+                                            <input type="checkbox" class="filled-in" checked="checked" name="auto_philhealth" />
+                                            {% else %}
+                                            <input type="checkbox" class="filled-in" name="auto_philhealth" />
+                                            {% endif %}
+                                            <span>Philhealth Contribution</span>
+                                        </label>
+                                    </p>
+                                </div>
+                                <div class="col s6 input-field">
+                                    <p>
+                                        <label>
+                                            {% if employee.auto_pagibig == 1 %}
+                                            <input type="checkbox" class="filled-in" checked="checked" name="auto_pagibig" />
+                                            {% else %}
+                                            <input type="checkbox" class="filled-in" name="auto_pagibig" />
+                                            {% endif %}
+                                            <span>Pag-Ibig Contribution</span>
+                                        </label>
+                                    </p>
+                                </div>
+                                <div class="col s6 input-field">
+                                    <p>
+                                        <label>
+                                            {% if employee.auto_tax == 1 %}
+                                            <input type="checkbox" class="filled-in" checked="checked" name="auto_tax" />
+                                            {% else %}
+                                            <input type="checkbox" class="filled-in" name="auto_tax" />
+                                            {% endif %}
+                                            <span>Tax Deduction</span>
+                                        </label>
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
+                    <br />
                     <button class="btn waves-effect waves-light grey darken-3" type="submit" name="action">Submit
                         <i class="material-icons right">send</i>
                     </button>
@@ -119,16 +175,16 @@
     </div>
     <div class="modal-content">
         <h5>Reset password to default.</h5>
-        <br/>
+        <br />
         <p>Default password is the employee number.</p>
     </div>
     <div class="modal-footer">
         <a href="/reset_password/{{employee.id}}/reset/">
-        <button class=" waves-effect waves-green btn-flat btn grey darken-3 white-text" type="submit" 
-            id="formSubmit">
-            PROCEED<i class="material-icons right">send</i>
-        </button>
-    </a> 
+            <button class=" waves-effect waves-green btn-flat btn grey darken-3 white-text" type="submit"
+                id="formSubmit">
+                PROCEED<i class="material-icons right">send</i>
+            </button>
+        </a>
     </div>
 </div>
 {% endblock %}

@@ -1,0 +1,121 @@
+{% extends "includes/base1.html" %}
+
+{% block title %}Pay Detail{% endblock %}
+{% block add_links %}
+{% load static %}
+<script src="{% static 'js/litepicker-main.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col s12 m12 l12">
+        {% for message in messages %}
+        <div class="">
+            <div class="card-panel success">
+                <span><i class="material-icons left">check_circle</i> Success: {{ message }}
+                </span>
+            </div>
+        </div>
+        {% endfor %}
+        <div class="card">
+            <div class="card-action grey darken-3 white-text">
+                <span>Payroll Details</span>
+            </div>
+            <div class="card-content">
+                <u><b>Payroll Period: {{start_date|date}} to {{end_date|date}}</b></u><br/>
+                <u><b>Employee Number: {{employee.employee_number}}</b></u><br/>
+                <u><b>Employee: {{employee}}</b></u><br/>
+                <br/>
+                <h6 class="center"><b><u>Payroll Summary</u></b></h6>
+                <br/>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Rate (Php)</th>
+                            <th>Work (days)</th>
+                            <th>Gross Pay (Php)</th>
+                            <th>Total Deductions (Php)</th>
+                            <th>Taxable Pay (Php)</th>
+                            <th>Tax (Php)</th>
+                            <th>Net Pay (Php)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            {% load humanize %}
+                            <td>{{ salary.rate.rate.rate_period }}</td>
+                            <td>{{ salary.rate.time_rate | intcomma }}</td>
+                            <td>{{ salary.attendance | floatformat:"2" | intcomma }}</td>
+                            <td>{{ salary.gross_pay | floatformat:"2" | intcomma }}</td>
+                            <td>{{ salary.total_deductions | floatformat:"2" | intcomma }}</td>
+                            <td>{{ salary.taxable_pay | floatformat:"2" | intcomma }}</td>
+                            <td>{{ salary.tax | floatformat:"2" | intcomma }}</td>
+                            <td>{{ salary.net_pay | floatformat:"2" | intcomma }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br/>
+                <br/>
+                <h6 class="center"><b><u>Deductions</u></b></h6>
+                <br/>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Deduction</th>
+                            <th>Notes</th>
+                            <th>Amount (Php)</th>
+                            <th>For (date)</th>
+                            <th>Created/Last Modified</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if deductions %}
+                            {% for item in deductions %}
+                                <tr>
+                                    <td>{{ item.name }}</td>
+                                    <td>{{ item.notes }}</td>
+                                    <td>{{ item.amount | intcomma }}</td>
+                                    <td>{{ item.date | date }}</td>
+                                    <td>{{ item.last_modified }}</td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block js_scripts %}
+
+<script>
+    var picker = new Litepicker({
+        element: document.getElementById('litepicker'),
+        format: 'YYYY-MM-DD',
+        selectForward: true,
+        singleMode: false,
+        minDays: 1,
+        mobileFriendly: true,
+        numberOfMonths: 1,
+        numberOfColumns: 1,
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $('#dtable').DataTable({
+            "order": [[6, "desc"]]
+        });
+    });
+</script>
+
+<script>
+    document.getElementById('amount').addEventListener('input', function () {
+        console.log(document.getElementById('employee').value)
+    })
+</script>
+{% endblock %}

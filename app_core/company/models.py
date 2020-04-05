@@ -15,12 +15,20 @@ class Company(models.Model):
 class Rate(models.Model):
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
     name = models.CharField(max_length=128)
+    period = models.IntegerField(default=0) # 0 - daily, 1 - monthly
     is_active = models.CharField(max_length=8, default='Active')
     date_created = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True,)
 
     def __str__(self):
         return str(self.name)
+
+    @property
+    def rate_period(self):
+        if self.period == 0:
+            return "Daily Rate"
+        else:
+            return "Monthly Rate"
 
 class RateHistory(models.Model):
     rate =  models.ForeignKey(Rate, on_delete=models.CASCADE)
@@ -56,6 +64,12 @@ class Employee(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True,)
 
+    auto_sss = models.IntegerField(default=1)
+    auto_philhealth = models.IntegerField(default=1)
+    auto_pagibig = models.IntegerField(default=1)
+    auto_tax = models.IntegerField(default=1)
+
     def __str__(self):
         return str(self.last_name)+" "+str(self.suffix)+", "+str(self.first_name)+" "+str(self.middle_name)[:1]+"."
+
 

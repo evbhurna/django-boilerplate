@@ -24,8 +24,9 @@
                     <thead>
                         <tr>
                             <th>Rate Name</th>
+                            <th>Rate Period</th>
+                            <th>Amount (Php)</th>
                             <th>Tax</th>
-                            <th>Daily Rate (Php)</th>
                             <th>Created/Last Modified</th>
                             <th></th>
                         </tr>
@@ -36,8 +37,9 @@
                         {% for item in rates %}
                         <tr>
                             <td>{{ item.rate.name }}</td>
-                            <td>{{ item.tax }}</td>
+                            <td>{{ item.rate.rate_period }}</td>
                             <td>{{ item.time_rate | intcomma }}</td>
+                            <td>{{ item.tax }}</td>
                             <td>{{ item.last_modified }}</td>
                             <td>
                                 <a href="/rates/{{ item.rate.id }}/view/">
@@ -67,6 +69,14 @@
             <input type="text" id="today" value="{{today|date}}" class="hide">
             <div class="row">
                 <div class="col s12 input-field">
+                    <i class="material-icons prefix">date_range</i>
+                    <select id="period" name="period" class="validate" required>
+                        <option value="1" selected>Monthly Rate</option>
+                        <option value="0">Daily Rate</option>  
+                    </select>
+                    <label for="time_rate">Rate Period</label>
+                </div>
+                <div class="col s12 input-field">
                     <i class="material-icons prefix">notes</i>
                     <input id="name" name="name" type="text" placeholder="Enter name of employee rate" class="validate" required>
                     <label for="name">Rate</label>
@@ -77,14 +87,14 @@
                 </div>
                 <div class="col s12 input-field">
                     <i class="material-icons prefix">payment</i>
-                    <input id="time_rate" name="time_rate" placeholder="Enter employee rate (Php) per day" type="number" min="0" step="0.01" class="validate" required>
+                    <input id="time_rate" name="time_rate" placeholder="Enter employee rate (Php) per rate period" type="number" min="0" step="0.01" class="validate" required>
                     <label for="time_rate">Amount (Rate)</label>
                 </div>
                 <div class="col s12 input-field">
                     <i class="material-icons prefix">poll</i>
                     <select id="tax" name="tax" class="validate" required>
-                        <option value="0">Non Taxable</option>
-                        <option value="1">Taxable</option>
+                        <option value="1" selected>Taxable</option>
+                        <option value="0">Non Taxable</option>  
                     </select>
                     <label for="time_rate">Tax Option</label>
                 </div>

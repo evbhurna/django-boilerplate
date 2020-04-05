@@ -52,12 +52,20 @@ def attendance(request):
             out_date = parse_datetime(excel_data[j][4])
             time_out = out_date + getTimeDelta(excel_data[j][5])
 
-            attendance_created = Attendance.objects.create(
-                employee = employee,
-                time_in = time_in,
-                time_out = time_out,
-                type = excel_data[j][6]
+            check = Attendance.objects.filter(
+                time_in__day = in_date.day,
+                time_out__day = out_date.day
             )
+
+            if check:
+                pass
+            else:
+                attendance_created = Attendance.objects.create(
+                    employee = employee,
+                    time_in = time_in,
+                    time_out = time_out,
+                    type = excel_data[j][6]
+                )
 
         messages.success(
             request, 'Attendance file successfully uploaded.')

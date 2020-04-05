@@ -24,16 +24,17 @@
             <div class="card-content">
                 <form method="POST" autocomplete="off" id="rangeForm">
                     {% csrf_token %}
-                <div class="row">
-                    <div class="col s12 m6">
-                        <label for="litepicker">Select Payroll Date</label>
-                        <input id="litepicker" name="litepicker" placeholder="Select Payroll Date">
-                        <br/><br/>
-                        <button class="btn waves-effect waves-light grey darken-3" type="submit" name="action">Generate
-                            <i class="material-icons right">send</i>
-                          </button>
+                    <div class="row">
+                        <div class="col s12 m6">
+                            <label for="litepicker">Select Payroll Date</label>
+                            <input id="litepicker" name="litepicker" placeholder="Select Payroll Date">
+                            <br /><br />
+                            <button class="btn waves-effect waves-light grey darken-3" type="submit"
+                                name="action">Generate
+                                <i class="material-icons right">send</i>
+                            </button>
+                        </div>
                     </div>
-                </div>
                 </form>
             </div>
         </div>
@@ -43,13 +44,21 @@
             </div>
             {% if payroll %}
             <div class="card-content">
+                <u><b>Payroll Period: {{start_date|date}} to {{end_date|date}}</b></u>
+                
+                <br/><br/>
                 <table id="dtable" class="striped">
                     <thead>
                         <tr>
                             <th>Employee Number</th>
                             <th>Employee</th>
+                            <th>Type</th>
+                            <th>Rate</th>
+                            <th>Work (days)</th>
                             <th>Gross Pay</th>
                             <th>Total Deductions</th>
+                            <th>Taxable Pay</th>
+                            <th>Tax</th>
                             <th>Net Pay</th>
                             <th></th>
                         </tr>
@@ -61,11 +70,16 @@
                         <tr>
                             <td>{{ item.employee.employee_number }}</td>
                             <td>{{ item.employee }}</td>
-                            <td>{{ item.gross_pay | intcomma }}</td>
-                            <td>{{ item.total_deductions | intcomma }}</td>
-                            <td>{{ item.net_pay | intcomma }}</td>
+                            <td>{{ item.rate.rate.rate_period }}</td>
+                            <td>{{ item.rate.time_rate | intcomma }}</td>
+                            <td>{{ item.attendance | floatformat:"2" | intcomma }}</td>
+                            <td>{{ item.gross_pay | floatformat:"2" | intcomma }}</td>
+                            <td>{{ item.total_deductions | floatformat:"2" | intcomma }}</td>
+                            <td>{{ item.taxable_pay | floatformat:"2" | intcomma }}</td>
+                            <td>{{ item.tax | floatformat:"2" | intcomma }}</td>
+                            <td>{{ item.net_pay | floatformat:"2" | intcomma }}</td>
                             <td>
-                                <a href="/deductions/{{ item.id }}/view/">
+                                <a href="/generate_payroll/{{ item.employee.id }}/detail/?start_date={{start_date|date}}&end_date={{end_date|date}}">
                                     <span class="new badge blue" data-badge-caption="VIEW"></span>
                                 </a>
                             </td>
@@ -89,16 +103,16 @@
 {% block js_scripts %}
 
 <script>
-    var picker = new Litepicker({ 
+    var picker = new Litepicker({
         element: document.getElementById('litepicker'),
-        format:'YYYY-MM-DD',
+        format: 'YYYY-MM-DD',
         selectForward: true,
         singleMode: false,
         minDays: 1,
         mobileFriendly: true,
-        numberOfMonths: 2,
-        numberOfColumns: 2,
-     });
+        numberOfMonths: 1,
+        numberOfColumns: 1,
+    });
 </script>
 <script>
     $(document).ready(function () {

@@ -60,6 +60,7 @@
 <div id="modal1" class="modal" style="max-width: 600px; overflow-x: hidden;">
     <div class="modal-header grey darken-3 white-text">
         <b>CREATE EMPLOYEE ACCOUNT</b>
+        <br/><br/>
     </div>
     <div class="modal-content">
         <form action="" method="POST" id="ratesForm" autocomplete="off">
@@ -67,7 +68,8 @@
             <input type="text" id="user_name" value="{{user}}" class="hide">
             <input type="text" id="today" value="{{today|date}}" class="hide">
             <div class="row">
-
+                <br/>
+                <br/>
                 <div class="col s6 input-field">
                     <input id="first_name" name="first_name" type="text" placeholder="Enter First Name" class="validate" required>
                     <label for="first_name">First Name</label>
@@ -118,7 +120,6 @@
                     <label for="address">Home Address</label>
                 </div>
             </div>
-
             <br/><br/>
             <div id="code-danger" class="warning red-text hide">
                 <span><i class="material-icons left">warning</i>Employee rate already registered. Employee rate name
@@ -139,7 +140,7 @@
 <script>
     $(document).ready(function () {
         $('#dtable').DataTable({
-            "order":[[ 3, "desc" ]]
+            "order":[[ 3, "asc" ]]
         });
     });
 </script>

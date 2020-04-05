@@ -10,7 +10,6 @@ from .models import Deduction, TaxEntry
 
 today = now
 
-
 @login_required
 def deductions(request):
     user = Employee.objects.get(user=request.user)

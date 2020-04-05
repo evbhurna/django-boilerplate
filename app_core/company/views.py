@@ -43,7 +43,7 @@ def employees(request):
         return redirect('/employees/')
     else:
         rates = Rate.objects.filter(is_active='Active', company=user.company)
-        employees = Employee.objects.filter(company=user.company)
+        employees = Employee.objects.filter(company=user.company).order_by('-employee_number')
         return render(request, 'company/employees.html', {
             'user': user, 'employees': employees, 'today': today, 'rates':rates})
 
@@ -63,6 +63,39 @@ def employeesView(request, id):
         employee.contact=request.POST['contact']
         employee.email=request.POST['email']
         employee.address=request.POST['address']
+
+        try:
+            if request.POST['auto_sss'] == 'on':
+                employee.auto_sss = 1
+            else:
+                employee.auto_sss = 0
+        except:
+            employee.auto_sss = 0
+        
+        try:   
+            if request.POST['auto_philhealth'] == 'on':
+                employee.auto_philhealth = 1
+            else:
+                employee.auto_philhealth = 0
+        except:
+            employee.auto_philhealth = 0
+
+        try:
+            if request.POST['auto_pagibig'] == 'on':
+                employee.auto_pagibig = 1
+            else:
+                employee.auto_pagibig = 0
+        except:
+            employee.auto_pagibig = 0
+
+        try:
+            if request.POST['auto_tax'] == 'on':
+                employee.auto_tax = 1
+            else:
+                employee.auto_tax = 0
+        except:
+            employee.auto_tax = 0
+
         employee.save()
 
         messages.success(
@@ -78,7 +111,7 @@ def rates(request):
     user = Employee.objects.get(user=request.user)
     if request.method == 'POST':
         rate = Rate.objects.create(
-            company=user.company, name=request.POST['name'])
+            company=user.company, name=request.POST['name'], period=request.POST['period'])
         RateHistory.objects.create(
             rate=rate, status=1, time_rate=request.POST['time_rate'])
         messages.success(
@@ -99,13 +132,10 @@ def ratesView(request, id):
         rate.save()
 
         latest_rates = RateHistory.objects.filter(rate=rate).order_by('date_created').reverse()[0]
-        if Decimal(request.POST['time_rate'])==Decimal(latest_rates.time_rate):
-            pass
-        else:
-            latest_rates.status = 0
-            latest_rates.save()
-            RateHistory.objects.create(
-                rate=rate, time_rate=request.POST['time_rate'], status=1)
+        latest_rates.status = 0
+        latest_rates.save()
+        RateHistory.objects.create(
+            rate=rate, time_rate=request.POST['time_rate'], status=1, taxable=request.POST['tax'])
 
         messages.success(
             request, '{} - Employee rate successfully updated.'.format(rate.name))

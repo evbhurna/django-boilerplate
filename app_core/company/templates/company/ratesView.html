@@ -28,11 +28,13 @@
                     <b>Rate Information</b>
                     <br /><br />
                     <div class="row" style="max-width: 700px;">
-                        <div class="col s12 input-field">
+                        <div class="col s6 input-field">
                             <input id="name" name="name" type="text" value="{{latest.rate.name}}" class="validate"
                                 placeholder="Enter name of employee rate" required>
                             <label for="name">Rate</label>
                         </div>
+
+
                         <div id="code-danger" class="col s12 warning red-text hide">
                             <span><i class="material-icons left">warning</i>Employee rate already registered. Employee
                                 rate name
@@ -47,7 +49,7 @@
                         </div>
                         <div class="col s6 input-field">
                             <select id="tax" name="tax" type="text" class="validate" required>
-                                {% if employee.gender == 'Taxable' %}
+                                {% if latest.taxable == 1 %}
                                 <option value="1" selected>Taxable</option>
                                 <option value="0">Non Taxable</option>
                                 {% else %}
